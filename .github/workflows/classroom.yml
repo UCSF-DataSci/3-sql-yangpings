@@ -1,0 +1,35 @@
+name: Grading Workflow
+
+on:
+  push:
+    branches: [ main ] # Or your default branch
+  pull_request:
+    branches: [ main ] # Or your default branch
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Use a recent Python 3 version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest papermill jupysql sqlalchemy prettytable
+
+    - name: Execute notebook
+      run: |
+        papermill sql_murder_mystery_assignment.ipynb executed_notebook.ipynb -k python3
+      # Continue even if the notebook fails, as the test might still pass or provide useful info
+      continue-on-error: true
+
+    - name: Run tests
+      run: |
+        pytest .github/tests/test_assignment.py
