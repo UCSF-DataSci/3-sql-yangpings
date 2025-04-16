@@ -38,7 +38,7 @@ jobs:
 
     - name: Execute notebook
       run: |
-        papermill sql_murder_mystery_assignment.ipynb executed_notebook.ipynb -k python3
+        papermill MYSTERY.ipynb executed_notebook.ipynb -k python3
       # Continue even if the notebook fails, as the test might still pass or provide useful info
       continue-on-error: true
 
