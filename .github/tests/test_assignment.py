@@ -4,7 +4,8 @@ import os
 
 # Define the expected success message
 # Note: This might need adjustment if the database message changes slightly
-EXPECTED_SUCCESS_MESSAGE_START = "Congrats, you found the murderer!"
+MURDER_SUCCESS = "Congrats, you found the murderer!"
+MASTERMIND_SUCCESS = "Congrats, you found the brains behind the murder!"
 
 # Define the path to the database relative to the test script
 # Assumes the test runs from the repository root or .github directory context
@@ -39,5 +40,5 @@ def test_murder_mystery_solution():
 
     assert solution_value is not None, "No value found in the solution table. Did the notebook run correctly and insert the solution?"
     assert isinstance(solution_value, str), f"Expected solution value to be a string, but got {type(solution_value)}"
-    assert solution_value.strip().startswith(EXPECTED_SUCCESS_MESSAGE_START), \
-        f"Solution value '{solution_value}' does not start with the expected success message '{EXPECTED_SUCCESS_MESSAGE_START}'. Check the inserted name."
+    assert solution_value.strip().startswith(MURDER_SUCCESS) or solution_value.strip().startswith(MASTERMIND_SUCCESS), \
+        f"Solution value '{solution_value}' does not start with the expected success message. Try again!"
